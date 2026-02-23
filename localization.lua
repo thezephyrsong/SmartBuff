@@ -71,9 +71,11 @@ SMARTBUFF_WARLOCK_PATTERN = {"^Demon %a+", "^Detect %a+ Invisibility$"};
 SMARTBUFF_HUNTER = { };
 SMARTBUFF_HUNTER[1] = {"Trueshot Aura", SMARTBUFF_CONST_SELF};
 SMARTBUFF_HUNTER[2] = {"Aspect of the Hawk", SMARTBUFF_CONST_SELF};
-SMARTBUFF_HUNTER[3] = {"Aspect of the Monkey", SMARTBUFF_CONST_SELF};
-SMARTBUFF_HUNTER[4] = {"Aspect of the Wild", SMARTBUFF_CONST_SELF};
-SMARTBUFF_HUNTER[5] = {"Aspect of the Beast", SMARTBUFF_CONST_SELF};
+SMARTBUFF_HUNTER[3] = {"Aspect of the Wolf", SMARTBUFF_CONST_SELF};
+SMARTBUFF_HUNTER[4] = {"Aspect of the Monkey", SMARTBUFF_CONST_SELF};
+SMARTBUFF_HUNTER[5] = {"Aspect of the Wild", SMARTBUFF_CONST_SELF};
+SMARTBUFF_HUNTER[6] = {"Aspect of the Beast", SMARTBUFF_CONST_SELF};
+SMARTBUFF_HUNTER[7] = {"Aspect of the Viper", SMARTBUFF_CONST_SELF};
 SMARTBUFF_HUNTER_PATTERN = {"^Aspect of"};
 
 -- Shaman
