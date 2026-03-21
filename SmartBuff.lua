@@ -130,6 +130,8 @@ function SMARTBUFF_OnLoad()
 	
 	this:RegisterEvent("LEARNED_SPELL_IN_TAB");
 	this:RegisterEvent("ACTIONBAR_HIDEGRID");
+	this:RegisterEvent("GOSSIP_SHOW");
+	this:RegisterEvent("GOSSIP_CLOSED");
 	
   this:RegisterEvent("PLAYER_AURAS_CHANGED");
   this:RegisterEvent("CHAT_MSG_ADDON");
@@ -304,6 +306,36 @@ function SMARTBUFF_OnEvent(event)
         cBuffTimer[currentUnit][currentSpell] = GetTime();
         --end
         if (name ~= nil) then SMARTBUFF_AddMsg(name .. ": " .. currentSpell .. " " .. SMARTBUFF_MSG_BUFFED); end
+      end
+    end
+  elseif (event == "GOSSIP_SHOW") then
+    if (SMARTBUFF_Options.AutoSwitchTemplateSpec and GossipFrameNpcNameText and GossipFrameNpcNameText:GetText() == "Goblin Brainwashing Device") then
+      SMARTBUFF_washer_pending = nil;
+      for i = 1, NUMGOSSIPBUTTONS do
+        local btn = getglobal("GossipTitleButton" .. i);
+        if (btn and btn:IsVisible()) then
+          local _, _, load_spec = string.find(btn:GetText(), "Activate (%d+).. Specialization");
+          if (load_spec) then
+            local s = tonumber(load_spec);
+            local orig = btn:GetScript("OnClick");
+            btn:SetScript("OnClick", function()
+              SMARTBUFF_washer_pending = s;
+              if (orig) then orig(); end
+            end);
+          end
+        end
+      end
+    end
+  elseif (event == "GOSSIP_CLOSED") then
+    if (SMARTBUFF_Options.AutoSwitchTemplateSpec and SMARTBUFF_washer_pending ~= nil) then
+      local slot = SMARTBUFF_washer_pending;
+      SMARTBUFF_washer_pending = nil;
+      local tmp = SMARTBUFF_TEMPLATES[slot];
+      if (tmp and currentTemplate ~= tmp) then
+        SMARTBUFF_AddMsg(SMARTBUFF_OFT_AUTOSWITCHTMP .. " (spec " .. slot .. "): " .. currentTemplate .. " -> " .. tmp);
+        currentTemplate = tmp;
+        SMARTBUFF_Options.LastTemplate = currentTemplate;
+        SMARTBUFF_SetBuffs();
       end
     end
   end
@@ -2236,6 +2268,7 @@ function SMARTBUFF_Options_Init()
 	if (SMARTBUFF_Options.TargetSwitch == nil) then	SMARTBUFF_Options.TargetSwitch = true; end
 	if (SMARTBUFF_Options.AutoSwitchTemplate == nil) then	SMARTBUFF_Options.AutoSwitchTemplate = false; end
 	if (SMARTBUFF_Options.AutoSwitchTemplateInst == nil) then	SMARTBUFF_Options.AutoSwitchTemplateInst = false; end
+	if (SMARTBUFF_Options.AutoSwitchTemplateSpec == nil) then	SMARTBUFF_Options.AutoSwitchTemplateSpec = false; end
 	
 	if (SMARTBUFF_Options.CTRASync == nil) then	SMARTBUFF_Options.CTRASync = true; end
 	
@@ -2396,6 +2429,9 @@ function SMARTBUFF_OAutoSwitchTmp()
 end
 function SMARTBUFF_OAutoSwitchTmpInst()
   SMARTBUFF_Options.AutoSwitchTemplateInst = not SMARTBUFF_Options.AutoSwitchTemplateInst;
+end
+function SMARTBUFF_OAutoSwitchTmpSpec()
+  SMARTBUFF_Options.AutoSwitchTemplateSpec = not SMARTBUFF_Options.AutoSwitchTemplateSpec;
 end
 
 function SMARTBUFF_OBuffTarget()
@@ -2697,6 +2733,7 @@ function SMARTBUFF_Options_OnShow()
   SmartBuffOptionsFrame_cbAutoRest:SetChecked(SMARTBUFF_Options.ToggleAutoRest);
   SmartBuffOptionsFrame_cbAutoSwitchTmp:SetChecked(SMARTBUFF_Options.AutoSwitchTemplate);
   SmartBuffOptionsFrame_cbAutoSwitchTmpInst:SetChecked(SMARTBUFF_Options.AutoSwitchTemplateInst);
+  SmartBuffOptionsFrame_cbAutoSwitchTmpSpec:SetChecked(SMARTBUFF_Options.AutoSwitchTemplateSpec);
   SmartBuffOptionsFrame_cbBuffPvP:SetChecked(SMARTBUFF_Options.BuffPvP);
   SmartBuffOptionsFrame_cbBuffTarget:SetChecked(SMARTBUFF_Options.BuffTarget);
   SmartBuffOptionsFrame_cbBuffInCities:SetChecked(SMARTBUFF_Options.BuffInCities);

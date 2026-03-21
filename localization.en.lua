@@ -295,6 +295,7 @@ SMARTBUFF_OFT_MSGERROR       = "error";
 SMARTBUFF_OFT_HIDEMMBUTTON   = "Hide minimap-button";
 SMARTBUFF_OFT_REBUFFTIMER    = "Rebuff Timer";
 SMARTBUFF_OFT_AUTOSWITCHTMP  = "Switch template";
+SMARTBUFF_OFT_AUTOSWITCHTMPSPEC = "Brainwasher spec";
 SMARTBUFF_OFT_SELFFIRST      = "Self first";
 SMARTBUFF_OFT_SCROLLWHEEL    = "Buff on scrollwheel";
 SMARTBUFF_OFT_TARGETSWITCH   = "target change";

@@ -565,6 +565,37 @@
 					</OnLeave>					
 				</Scripts>
 			</CheckButton>
+
+			<CheckButton name="SmartBuffOptionsFrame_cbAutoSwitchTmpSpec" inherits="OptionsCheckButtonTemplate">
+				<HitRectInsets>
+					<AbsInset left="0" right="0" top="0" bottom="0"/>
+				</HitRectInsets>
+				<Size>
+					<AbsDimension x="24" y="24"/>
+				</Size>			
+				<Anchors>
+					<Anchor point="TOPLEFT" relativePoint="TOPLEFT" relativeTo="SmartBuffOptionsFrame_cbAutoSwitchTmp">
+						<Offset>
+							<AbsDimension x="260" y="0"/>
+						</Offset>
+					</Anchor>
+				</Anchors>
+				<Scripts>
+					<OnLoad>
+						getglobal(this:GetName().."Text"):SetText(SMARTBUFF_OFT_AUTOSWITCHTMPSPEC);
+					</OnLoad>				
+					<OnClick>
+						SMARTBUFF_OAutoSwitchTmpSpec();
+					</OnClick>
+					<OnEnter>
+						GameTooltip:SetOwner(this, "ANCHOR_RIGHT");
+						GameTooltip:SetText(SMARTBUFF_OFT_AUTOSWITCHTMPSPEC, SMARTBUFF_TTC_R, SMARTBUFF_TTC_G, SMARTBUFF_TTC_B, SMARTBUFF_TTC_A);
+					</OnEnter>
+					<OnLeave>
+						GameTooltip:Hide();
+					</OnLeave>					
+				</Scripts>
+			</CheckButton>
 			
 			<CheckButton name="SmartBuffOptionsFrame_cbScrollWheel" inherits="OptionsCheckButtonTemplate">
 				<HitRectInsets>
